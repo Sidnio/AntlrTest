@@ -7,8 +7,12 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 public class Main {
+
     public static void main(String[] args) {
-        String code = "class C { Module module; Module mOdule; }";
+        String code = "class C { " +
+                "int a;\n" +
+                "Module module\n; " +
+                "Module mOdule\n; }";
         CharStream input = CharStreams.fromString(code);
         org.example.JavaLexer lexer = new org.example.JavaLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -22,7 +26,17 @@ public class Main {
 class JL extends org.example.JavaParserBaseListener {
     @Override
     public void enterVariableDeclaratorId(org.example.JavaParser.VariableDeclaratorIdContext ctx) {
-        String s = ctx.identifier().getChild(0).toString();
-        System.out.println(s);
+        // String s = ctx.identifier().getChild(0).toString();
+        // System.out.println(s);
+    }
+
+
+    @Override
+    public void enterFieldDeclaration(org.example.JavaParser.FieldDeclarationContext ctx) {
+
+      //  String text = ctx.variableDeclarators().variableDeclarator(0).variableDeclaratorId().identifier().IDENTIFIER().getSymbol().getText();
+
+        String text = ctx.variableDeclarators().variableDeclarator(0).variableDeclaratorId().getChild(0).getText();
+        System.out.println(text);
     }
 }
