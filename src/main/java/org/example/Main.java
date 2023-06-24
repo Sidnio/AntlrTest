@@ -39,13 +39,20 @@ class JL extends org.example.JavaParserBaseListener {
     @Override
     public void enterFieldDeclaration(org.example.JavaParser.FieldDeclarationContext ctx) {
 
-        Token token = ctx.variableDeclarators().variableDeclarator(0).variableDeclaratorId().identifier().IDENTIFIER().getSymbol();
+/*        Token token = ctx.variableDeclarators().variableDeclarator(0).variableDeclaratorId().identifier().IDENTIFIER().getSymbol();
+        System.out.println(token.getText());
+        System.out.println(token.getStartIndex());
+        System.out.println(token.getStopIndex());*/
+
+
+
+        var id = ctx.variableDeclarators().variableDeclarator(0).variableDeclaratorId().identifier();
+        var id_leaf_node = id.IDENTIFIER();
+        if (id_leaf_node == null) id_leaf_node = id.MODULE();
+        Token token = id_leaf_node.getSymbol();
         System.out.println(token.getText());
         System.out.println(token.getStartIndex());
         System.out.println(token.getStopIndex());
-        //我这里是 要获取 module   token 的所有参数 而不单是文本数据
-
-
 
      /*   String text = ctx.variableDeclarators().variableDeclarator(0).variableDeclaratorId().getChild(0).getText();
         System.out.println(text);*/
